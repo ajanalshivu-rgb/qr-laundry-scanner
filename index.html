@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ಶಿವಶಕ್ತಿ ಲಾಂಡ್ರಿ ಶಾಪ್ - QR ಸ್ಕ್ಯಾನರ್</title>
+    <!-- HTML5 QR Code Library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        #reader {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eef9f1;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            display: none;
+            text-align: left;
+        }
+        #result-box h3 {
+            margin: 0 0 8px 0;
+            color: #155724;
+            font-size: 16px;
+        }
+        #result-data {
+            word-break: break-all;
+            font-size: 15px;
+            color: #333;
+        }
+        .btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ಶಿವಶಕ್ತಿ ಲಾಂಡ್ರಿ ಶಾಪ್</h1>
+    <p>ಸ್ಟೋರ್ ಇನ್ಫಾರ್ಮೇಶನ್ QR ಸ್ಕ್ಯಾನರ್</p>
+
+    <!-- Scanner Window -->
+    <div id="reader"></div>
+
+    <!-- Result Display Box -->
+    <div id="result-box">
+        <h3>ಸ್ಕ್ಯಾನ್ ಮಾಡಿದ ಮಾಹಿತಿ:</h3>
+        <div id="result-data"></div>
+        <button class="btn" onclick="resetScanner()">ಮತ್ತೆ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</button>
+    </div>
+</div>
+
+<script>
+    let html5QrcodeScanner;
+
+    function onScanSuccess(decodedText, decodedResult) {
+        // Stop scanning after success
+        html5QrcodeScanner.clear();
+
+        // Show result
+        document.getElementById('result-data').innerText = decodedText;
+        document.getElementById('result-box').style.display = 'block';
+    }
+
+    function onScanFailure(error) {
+        // Handle scan errors or frame failures if needed
+    }
+
+    function startScanner() {
+        document.getElementById('result-box').style.display = 'none';
+        html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", 
+            { fps: 10, qrbox: { width: 250, height: 250 } },
+            /* verbose= */ false
+        );
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    }
+
+    function resetScanner() {
+        startScanner();
+    }
+
+    // Start scanner on page load
+    window.onload = startScanner;
+</script>
+
+</body>
+</html>
